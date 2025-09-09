@@ -117,7 +117,12 @@
   /* Hero Button Variants */
   .btn-hero-primary {
     @apply bg-gradient-to-r from-primary to-primary-dark text-primary-foreground hover:from-primary-dark hover:to-primary 
-           px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-soft hover:shadow-medium;
+           px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105;
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.1);
+  }
+  
+  .btn-hero-primary:hover {
+    box-shadow: 0 8px 30px -8px hsl(var(--primary) / 0.2);
   }
   
   .btn-hero-secondary {
@@ -127,7 +132,12 @@
   
   /* Card Styles */
   .card-gradient {
-    @apply bg-gradient-to-br from-card to-secondary border border-border/50 rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all duration-300;
+    @apply bg-gradient-to-br from-card to-secondary border border-border/50 rounded-2xl p-8 transition-all duration-300;
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.1);
+  }
+  
+  .card-gradient:hover {
+    box-shadow: 0 8px 30px -8px hsl(var(--primary) / 0.2);
   }
   
   /* Text Gradients */
