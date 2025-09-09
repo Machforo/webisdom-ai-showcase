@@ -24,12 +24,23 @@ const About = () => {
 
   const teamMembers = [
     {
-      name: "Atharv Sharma",
-      role: "Founder & CEO",
-      image: "/api/placeholder/300/300",
-      description: "Visionary leader with expertise in AI strategy and business transformation."
+      name: "Amardeep Bajpai",
+      role: "FOUNDER, IIM-A ALUMNUS",
+      image: "/lovable-uploads/aa6bc937-0bd0-4524-a16f-7dc9e29851c4.png",
+      description: "Mr. Amardeep Bajpai did his management education from the prestigious Indian Institute of Management, Ahmedabad."
     },
-    // Add more team members as needed
+    {
+      name: "Gourav Singh",
+      role: "Sr. Vice President, BD & Client Servicing",
+      image: "/lovable-uploads/2ca69ba8-ceb5-425d-92d5-52e9066faf81.png",
+      description: "Accomplishes project objectives by planning and evaluating project activities."
+    },
+    {
+      name: "Atharv Kumar",
+      role: "AI LEAD, IIT MANDI ALUMUNUS",
+      image: "/lovable-uploads/506b0336-44ee-4e68-8cea-73e6a5f369ca.png",
+      description: "he is the AI Lead at Webisdom AI Solutions, driving innovation across Hospitality, Fintech, and Healthcare. With expertise in applied machine learning and product development, he focuses on building intelligent systems that deliver real business impact."
+    }
   ];
 
   return (
@@ -133,8 +144,12 @@ const About = () => {
               {teamMembers.map((member) => (
                 <Card key={member.name} className="card-gradient hover:shadow-medium transition-all duration-300 text-center">
                   <CardContent className="p-8">
-                    <div className="w-24 h-24 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Users className="h-12 w-12 text-white" />
+                    <div className="w-32 h-32 mx-auto mb-6 overflow-hidden rounded-full border-4 border-gradient-to-br from-primary to-accent">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <h3 className="text-xl font-bold mb-2">{member.name}</h3>
                     <p className="text-accent font-medium mb-4">{member.role}</p>
