@@ -74,6 +74,11 @@ export default {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      boxShadow: {
+        'soft': '0 4px 20px -4px hsl(var(--primary) / 0.1)',
+        'medium': '0 8px 30px -8px hsl(var(--primary) / 0.2)',
+        'strong': '0 20px 60px -20px hsl(var(--primary) / 0.3)',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
