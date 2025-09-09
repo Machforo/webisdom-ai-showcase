@@ -39,7 +39,7 @@ const About = () => {
       name: "Atharv Kumar",
       role: "AI LEAD, IIT MANDI ALUMUNUS",
       image: "/lovable-uploads/506b0336-44ee-4e68-8cea-73e6a5f369ca.png",
-      description: "he is the AI Lead at Webisdom AI Solutions, driving innovation across Hospitality, Fintech, and Healthcare. With expertise in applied machine learning and product development, he focuses on building intelligent systems that deliver real business impact."
+      description: "As the AI Lead at Webisdom AI Solutions, driving innovation across Hospitality, Fintech, and Healthcare."
     }
   ];
 
