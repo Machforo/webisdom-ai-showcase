@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/lib/supabase";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,16 +18,62 @@ const Contact = () => {
     message: ""
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.message) {
-      setIsSubmitted(true);
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
-      });
+      setIsSubmitting(true);
+      
+      try {
+        // Insert contact form data into Supabase table
+        const { error: insertError } = await supabase
+          .from('contact_submissions')
+          .insert([
+            {
+              name: formData.name,
+              email: formData.email,
+              company: formData.company,
+              service: formData.service,
+              message: formData.message,
+              created_at: new Date().toISOString()
+            }
+          ]);
+
+        if (insertError) {
+          throw insertError;
+        }
+
+        // Call edge function to send email
+        const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+          body: {
+            to: 'atharv.kumar@webisdom.com',
+            subject: `New Contact Form Submission - ${formData.service}`,
+            formData: formData
+          }
+        });
+
+        if (emailError) {
+          console.error('Email sending error:', emailError);
+          // Don't throw here as the form data is still saved
+        }
+
+        setIsSubmitted(true);
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+        });
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        toast({
+          title: "Error sending message",
+          description: "Please try again or contact us directly.",
+          variant: "destructive"
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -172,8 +219,8 @@ const Contact = () => {
                         />
                       </div>
 
-                      <Button type="submit" className="w-full">
-                        Send Message
+                      <Button type="submit" className="w-full" disabled={isSubmitting}>
+                        {isSubmitting ? "Sending..." : "Send Message"}
                         <Send className="ml-2 h-4 w-4" />
                       </Button>
                     </form>
