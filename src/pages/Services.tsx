@@ -54,169 +54,56 @@ const Services = () => {
           </div>
         </section>
 
-        {/* Services Grid */}
+        {/* AI Audit Service */}
         <section className="py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              
-              {/* Hotel AI Chieftain */}
+            <div className="max-w-4xl mx-auto">
               <Card className="card-gradient hover:shadow-strong transition-all duration-500">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-2xl">Hotel AI Chieftain</CardTitle>
-                    <div className="flex items-center space-x-1 bg-accent/20 text-accent px-3 py-1 rounded-full text-sm font-medium">
-                      <CheckCircle className="h-3 w-3" />
-                      <span>Live</span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <p className="text-muted-foreground">
-                    Revolutionary hospitality management platform that transforms hotel operations with intelligent automation and guest experience optimization.
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold">Key Features:</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-accent" />
-                        <span className="text-sm">Intelligent Guest Experience Management</span>
-                      </li>
-                      <li className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-accent" />
-                        <span className="text-sm">Dynamic Revenue Optimization</span>
-                      </li>
-                      <li className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-accent" />
-                        <span className="text-sm">Operational Intelligence & Analytics</span>
-                      </li>
-                      <li className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-accent" />
-                        <span className="text-sm">Automated Workflow Management</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <Button className="w-full" asChild>
-                    <a 
-                      href="https://ai-chieftain.webisdomtech.com/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      Explore Hotel AI Chieftain
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* AI Audit as a Service */}
-              <Card className="card-gradient hover:shadow-strong transition-all duration-500">
-                <CardHeader>
-                  <CardTitle className="text-2xl">AI Audit as a Service</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <p className="text-muted-foreground">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-3xl">AI Audit as a Service</CardTitle>
+                  <p className="text-muted-foreground mt-4">
                     Comprehensive AI readiness assessment that identifies opportunities, analyzes potential, and delivers actionable insights for successful AI adoption.
                   </p>
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold">What You Get:</h4>
-                    <ul className="space-y-2">
-                      {auditBenefits.map((benefit, index) => (
-                        <li key={index} className="flex items-start space-x-2">
-                          <CheckCircle className="h-4 w-4 text-accent mt-0.5 flex-shrink-0" />
-                          <span className="text-sm">{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <Button className="w-full" asChild>
-                    <Link to="/contact">
-                      Request AI Audit
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Fintech Solutions */}
-              <Card className="card-gradient hover:shadow-strong transition-all duration-500 opacity-75">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-2xl">Fintech AI Solutions</CardTitle>
-                    <div className="flex items-center space-x-1 bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">
-                      <Clock className="h-3 w-3" />
-                      <span>Coming Soon</span>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">What You Get:</h4>
+                      <ul className="space-y-3">
+                        {auditBenefits.map((benefit, index) => (
+                          <li key={index} className="flex items-start space-x-3">
+                            <CheckCircle className="h-5 w-5 text-accent mt-0.5 flex-shrink-0" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-lg">Process Timeline:</h4>
+                      <div className="space-y-4">
+                        {auditProcess.map((step, index) => (
+                          <div key={step.title} className="flex items-start space-x-3">
+                            <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                              {index + 1}
+                            </div>
+                            <div>
+                              <h5 className="font-medium">{step.title}</h5>
+                              <p className="text-sm text-accent">{step.duration}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <p className="text-muted-foreground">
-                    Next-generation financial intelligence platform for risk management, fraud detection, and customer insights.
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold">Planned Features:</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Advanced Risk Assessment AI</span>
-                      </li>
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Real-time Fraud Detection</span>
-                      </li>
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Predictive Customer Analytics</span>
-                      </li>
-                    </ul>
-                  </div>
 
-                  <Button variant="outline" className="w-full" disabled>
-                    Join Waitlist
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Healthcare Solutions */}
-              <Card className="card-gradient hover:shadow-strong transition-all duration-500 opacity-75">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-2xl">Healthcare AI Platform</CardTitle>
-                    <div className="flex items-center space-x-1 bg-muted text-muted-foreground px-3 py-1 rounded-full text-sm font-medium">
-                      <Clock className="h-3 w-3" />
-                      <span>Coming Soon</span>
-                    </div>
+                  <div className="text-center pt-6">
+                    <Button size="lg" asChild>
+                      <Link to="/contact">
+                        Request AI Audit
+                      </Link>
+                    </Button>
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <p className="text-muted-foreground">
-                    Intelligent healthcare solutions for patient care optimization and medical decision support systems.
-                  </p>
-                  
-                  <div className="space-y-3">
-                    <h4 className="font-semibold">Planned Features:</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Patient Care Intelligence</span>
-                      </li>
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Medical Decision Support AI</span>
-                      </li>
-                      <li className="flex items-center space-x-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-sm">Predictive Health Analytics</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <Button variant="outline" className="w-full" disabled>
-                    Join Waitlist
-                  </Button>
                 </CardContent>
               </Card>
             </div>
