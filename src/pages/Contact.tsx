@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, MapPin, Phone, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -29,15 +29,16 @@ const Contact = () => {
       try {
         // Insert contact form data into Supabase table
         const { error: insertError } = await supabase
-          .from('contact_submissions')
+          .from('Contact Form Submission')
           .insert([
             {
-              name: formData.name,
+              "full name": formData.name,
               email: formData.email,
-              company: formData.company,
-              service: formData.service,
-              message: formData.message,
-              created_at: new Date().toISOString()
+              "Company Name": formData.company,
+              Interest: formData.service,
+              "Additional Message": formData.message,
+              Date: new Date().toLocaleDateString(),
+              Time: new Date().toLocaleTimeString()
             }
           ]);
 
