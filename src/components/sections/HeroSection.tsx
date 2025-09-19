@@ -54,15 +54,15 @@ const HeroSection = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <Button size="lg" asChild className="btn-hero-primary">
-              <Link to="/contact">
+              <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer">
                 Book a Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              </a>
             </Button>
             <Button size="lg" variant="outline" asChild className="btn-hero-secondary">
-              <Link to="/contact">
+              <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
                 Request an AI Audit
-              </Link>
+              </a>
             </Button>
           </div>
 

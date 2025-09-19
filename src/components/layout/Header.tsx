@@ -52,10 +52,10 @@ const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" asChild>
-              <Link to="/contact">Book a Demo</Link>
+              <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer">Book a Demo</a>
             </Button>
             <Button asChild>
-              <Link to="/contact">Request Audit</Link>
+              <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">Request Audit</a>
             </Button>
           </div>
 
@@ -88,14 +88,14 @@ const Header = () => {
               ))}
               <div className="pt-4 space-y-3">
                 <Button variant="ghost" className="w-full" asChild>
-                  <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
                     Book a Demo
-                  </Link>
+                  </a>
                 </Button>
                 <Button className="w-full" asChild>
-                  <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
                     Request Audit
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </nav>

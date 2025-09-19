@@ -99,9 +99,9 @@ const Services = () => {
 
                   <div className="text-center pt-6">
                     <Button size="lg" asChild>
-                      <Link to="/contact">
+                      <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
                         Request AI Audit
-                      </Link>
+                      </a>
                     </Button>
                   </div>
                 </CardContent>
@@ -147,9 +147,9 @@ const Services = () => {
 
             <div className="text-center mt-12">
               <Button size="lg" asChild>
-                <Link to="/contact">
+                <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
                   Start Your AI Audit
-                </Link>
+                </a>
               </Button>
             </div>
           </div>
