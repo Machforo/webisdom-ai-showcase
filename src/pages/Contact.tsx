@@ -49,8 +49,6 @@ const Contact = () => {
         // Call edge function to send email
         const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
           body: {
-            to: 'contact@webisdomservices.in',
-            subject: `New Contact Form Submission - ${formData.service}`,
             formData: formData
           }
         });
