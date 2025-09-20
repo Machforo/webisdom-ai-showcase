@@ -37,8 +37,8 @@ const Contact = () => {
               "Company Name": formData.company,
               Interest: formData.service,
               "Additional Message": formData.message,
-              Date: new Date().toLocaleDateString(),
-              Time: new Date().toLocaleTimeString()
+              Date: new Date().toISOString().split('T')[0],
+              Time: new Date().toISOString().split('T')[1].split('.')[0]
             }
           ]);
 
