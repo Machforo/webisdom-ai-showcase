@@ -91,7 +91,7 @@ const handler = async (req: Request): Promise<Response> => {
     `;
 
     // Send emails to both recipients
-    const recipients = ["atharva@webisdomservices.in", "atharv.kumar@webisdom.com"];
+    const recipients = ["atharva@webisdomservices.in", "contact@webisdom.com"];
     
     for (const recipient of recipients) {
       console.log(`Sending email to: ${recipient}`);
