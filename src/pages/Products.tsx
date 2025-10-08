@@ -3,7 +3,9 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ExternalLink, Zap, Shield, BarChart3, Users, Calendar, MessageSquare, Brain, Hotel, Utensils } from "lucide-react";
+import CaseStudies from "@/components/sections/CaseStudies";
 
 const Products = () => {
   const products = [
@@ -91,11 +93,17 @@ const Products = () => {
           </div>
         </section>
 
-        {/* Products Grid */}
+        {/* Products & Case Studies Tabs */}
         <section className="py-24">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-16">
-              {products.map((product, index) => (
+            <Tabs defaultValue="products" className="w-full">
+              <TabsList className="grid w-full max-w-md mx-auto mb-12 grid-cols-2">
+                <TabsTrigger value="products">Products</TabsTrigger>
+                <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="products" className="space-y-16">
+                {products.map((product, index) => (
                 <div key={product.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                   {/* Product Image */}
                   <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
@@ -173,7 +181,12 @@ const Products = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </TabsContent>
+
+              <TabsContent value="case-studies">
+                <CaseStudies />
+              </TabsContent>
+            </Tabs>
           </div>
         </section>
 
