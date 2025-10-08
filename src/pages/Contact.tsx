@@ -27,47 +27,73 @@ const Contact = () => {
       setIsSubmitting(true);
       
       try {
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const timeStr = now.toTimeString().split(' ')[0];
+
         // Insert contact form data into Supabase table
-        const { error: insertError } = await supabase
+        const { data: insertData, error: insertError } = await supabase
           .from('Contact Form Submission')
           .insert([
             {
               "full name": formData.name,
               email: formData.email,
-              "Company Name": formData.company,
+              "Company Name": formData.company || null,
               Interest: formData.service,
               "Additional Message": formData.message,
-              Date: new Date().toISOString().split('T')[0],
-              Time: new Date().toISOString().split('T')[1].split('.')[0]
+              Date: dateStr,
+              Time: timeStr
             }
-          ]);
+          ])
+          .select();
 
         if (insertError) {
+          console.error('Database insert error:', insertError);
           throw insertError;
         }
 
-        // Call edge function to send email
-        const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
-          body: {
-            formData: formData
-          }
-        });
+        console.log('Form submitted successfully to database:', insertData);
 
-        if (emailError) {
-          console.error('Email sending error:', emailError);
-          // Don't throw here as the form data is still saved
+        // Call edge function to send email
+        try {
+          const { data: emailData, error: emailError } = await supabase.functions.invoke('send-contact-email', {
+            body: {
+              name: formData.name,
+              email: formData.email,
+              company: formData.company,
+              service: formData.service,
+              message: formData.message
+            }
+          });
+
+          if (emailError) {
+            console.error('Email sending error:', emailError);
+          } else {
+            console.log('Email sent successfully:', emailData);
+          }
+        } catch (emailErr) {
+          console.error('Email function error:', emailErr);
+          // Don't throw - form is already saved
         }
 
         setIsSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          service: "demo",
+          message: ""
+        });
+        
         toast({
           title: "Message sent successfully!",
           description: "We'll get back to you within 24 hours.",
         });
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error submitting form:', error);
         toast({
           title: "Error sending message",
-          description: "Please try again or contact us directly.",
+          description: error?.message || "Please try again or contact us directly.",
           variant: "destructive"
         });
       } finally {

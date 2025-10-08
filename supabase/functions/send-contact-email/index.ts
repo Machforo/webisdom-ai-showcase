@@ -9,13 +9,11 @@ const corsHeaders = {
 };
 
 interface ContactEmailRequest {
-  formData: {
-    name: string;
-    email: string;
-    company: string;
-    service: string;
-    message: string;
-  };
+  name: string;
+  email: string;
+  company?: string;
+  service: string;
+  message: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -27,8 +25,8 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { formData }: ContactEmailRequest = await req.json();
-    console.log("Form data received:", formData);
+    const requestData: ContactEmailRequest = await req.json();
+    console.log("Form data received:", requestData);
 
     const serviceLabels = {
       demo: "Demo Request",
@@ -38,7 +36,7 @@ const handler = async (req: Request): Promise<Response> => {
       partnership: "Partnership Opportunities"
     };
 
-    const serviceLabel = serviceLabels[formData.service as keyof typeof serviceLabels] || formData.service;
+    const serviceLabel = serviceLabels[requestData.service as keyof typeof serviceLabels] || requestData.service;
 
     // Email content
     const emailHtml = `
@@ -53,15 +51,15 @@ const handler = async (req: Request): Promise<Response> => {
             <table style="width: 100%; border-collapse: collapse;">
               <tr style="border-bottom: 1px solid #e5e7eb;">
                 <td style="padding: 8px 0; font-weight: bold; color: #6b7280; width: 130px;">Name:</td>
-                <td style="padding: 8px 0; color: #374151;">${formData.name}</td>
+                <td style="padding: 8px 0; color: #374151;">${requestData.name}</td>
               </tr>
               <tr style="border-bottom: 1px solid #e5e7eb;">
                 <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Email:</td>
-                <td style="padding: 8px 0; color: #374151;">${formData.email}</td>
+                <td style="padding: 8px 0; color: #374151;">${requestData.email}</td>
               </tr>
               <tr style="border-bottom: 1px solid #e5e7eb;">
                 <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Company:</td>
-                <td style="padding: 8px 0; color: #374151;">${formData.company || 'Not provided'}</td>
+                <td style="padding: 8px 0; color: #374151;">${requestData.company || 'Not provided'}</td>
               </tr>
               <tr style="border-bottom: 1px solid #e5e7eb;">
                 <td style="padding: 8px 0; font-weight: bold; color: #6b7280;">Interest:</td>
@@ -77,7 +75,7 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="margin-bottom: 20px;">
             <h2 style="color: #374151; font-size: 18px; margin-bottom: 15px;">Message:</h2>
             <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; border-left: 4px solid #1e40af;">
-              <p style="margin: 0; color: #374151; line-height: 1.6;">${formData.message}</p>
+              <p style="margin: 0; color: #374151; line-height: 1.6;">${requestData.message}</p>
             </div>
           </div>
           
@@ -99,9 +97,9 @@ const handler = async (req: Request): Promise<Response> => {
       const emailResponse = await resend.emails.send({
         from: "Webisdom Contact Form <onboarding@resend.dev>",
         to: [recipient],
-        subject: `New ${serviceLabel} - ${formData.name}`,
+        subject: `New ${serviceLabel} - ${requestData.name}`,
         html: emailHtml,
-        replyTo: formData.email
+        replyTo: requestData.email
       });
 
       console.log(`Email sent to ${recipient}:`, emailResponse);
