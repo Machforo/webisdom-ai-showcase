@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Hotel, Heart, Building2, TrendingUp, Users, Shield, Zap, BarChart3, Clock, CheckCircle, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Industries = () => {
   const industries = [
@@ -230,9 +231,11 @@ const Industries = () => {
                           </CardHeader>
                           <CardContent className="p-0">
                             <p className="opacity-90 mb-6">{industry.caseStudy.result}</p>
-                            <Button variant="secondary" size="sm">
-                              Read Full Case Study
-                              <ArrowRight className="ml-2 w-4 h-4" />
+                            <Button variant="secondary" size="sm" asChild>
+                              <a href="/products#case-studies">
+                                Read Full Case Study
+                                <ArrowRight className="ml-2 w-4 h-4" />
+                              </a>
                             </Button>
                           </CardContent>
                         </Card>
@@ -252,10 +255,10 @@ const Industries = () => {
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                           <Button asChild>
-                            <a href="/products">Explore Solutions</a>
+                            <Link to="/products">Explore Solutions</Link>
                           </Button>
                           <Button variant="outline" asChild>
-                            <a href="/contact">Request Demo</a>
+                            <Link to="/contact">Request Demo</Link>
                           </Button>
                         </div>
                       </div>
@@ -330,10 +333,10 @@ const Industries = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" asChild>
-                <a href="/contact">Schedule Consultation</a>
+                <Link to="/contact">Schedule Consultation</Link>
               </Button>
               <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-primary" asChild>
-                <a href="/services">View Our Services</a>
+                <Link to="/services">View Our Services</Link>
               </Button>
             </div>
           </div>

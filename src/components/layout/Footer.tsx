@@ -12,7 +12,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/261cb841-1550-43b8-927d-f30d8e8fb3c7.png" 
                 alt="Webisdom AI Solutions" 
-                className="h-8 w-auto brightness-0 invert"
+                className="h-12 w-auto brightness-0 invert"
               />
               <span className="text-lg font-bold">Webisdom AI</span>
             </div>
