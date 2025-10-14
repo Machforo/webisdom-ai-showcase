@@ -265,7 +265,18 @@ const Contact = () => {
                         </div>
                         <div>
                           <h4 className="font-semibold mb-1">Email</h4>
-                          <p className="text-muted-foreground">contact@webisdomservices.in</p>
+                          <p className="text-muted-foreground">contact@webisdom.ai</p>
+                          <p className="text-muted-foreground">atharv.kumar@webisdom.ai</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-4">
+                        <div className="bg-primary/10 p-3 rounded-lg">
+                          <Mail className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-1">Phone</h4>
+                          <p className="text-muted-foreground">+91 9569394675</p>
                         </div>
                       </div>
 
@@ -320,7 +331,7 @@ const Contact = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <Button className="flex-1" asChild>
-                        <a href="mailto:contact@webisdomservices.in">
+                        <a href="mailto:contact@webisdom.ai">
                           Email Us Directly
                         </a>
                       </Button>

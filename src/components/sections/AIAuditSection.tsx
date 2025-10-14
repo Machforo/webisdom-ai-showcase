@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, BarChart3, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AuditRequestDialog } from "@/components/forms/AuditRequestDialog";
 
 const AIAuditSection = () => {
+  const [isAuditDialogOpen, setIsAuditDialogOpen] = useState(false);
   const steps = [
     {
       icon: Search,
@@ -63,11 +66,9 @@ const AIAuditSection = () => {
               Get a comprehensive AI audit and discover how artificial intelligence can revolutionize your operations, reduce costs, and drive growth.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="group">
-                <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
-                  Request AI Audit
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <Button size="lg" className="group" onClick={() => setIsAuditDialogOpen(true)}>
+                Request AI Audit
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link to="/services">
@@ -78,6 +79,8 @@ const AIAuditSection = () => {
           </div>
         </div>
       </div>
+
+      <AuditRequestDialog open={isAuditDialogOpen} onOpenChange={setIsAuditDialogOpen} />
     </section>
   );
 };

@@ -2,9 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { DemoRequestDialog } from "@/components/forms/DemoRequestDialog";
+import { AuditRequestDialog } from "@/components/forms/AuditRequestDialog";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDemoDialogOpen, setIsDemoDialogOpen] = useState(false);
+  const [isAuditDialogOpen, setIsAuditDialogOpen] = useState(false);
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
@@ -51,11 +55,11 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer">Book a Demo</a>
+            <Button variant="ghost" onClick={() => setIsDemoDialogOpen(true)}>
+              Book a Demo
             </Button>
-            <Button asChild>
-              <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">Request Audit</a>
+            <Button onClick={() => setIsAuditDialogOpen(true)}>
+              Request Audit
             </Button>
           </div>
 
@@ -87,21 +91,33 @@ const Header = () => {
                 </Link>
               ))}
               <div className="pt-4 space-y-3">
-                <Button variant="ghost" className="w-full" asChild>
-                  <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
-                    Book a Demo
-                  </a>
+                <Button
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => {
+                    setIsDemoDialogOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  Book a Demo
                 </Button>
-                <Button className="w-full" asChild>
-                  <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
-                    Request Audit
-                  </a>
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    setIsAuditDialogOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  Request Audit
                 </Button>
               </div>
             </nav>
           </div>
         )}
       </div>
+
+      <DemoRequestDialog open={isDemoDialogOpen} onOpenChange={setIsDemoDialogOpen} />
+      <AuditRequestDialog open={isAuditDialogOpen} onOpenChange={setIsAuditDialogOpen} />
     </header>
   );
 };

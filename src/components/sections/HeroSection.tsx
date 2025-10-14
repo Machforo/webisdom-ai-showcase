@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { DemoRequestDialog } from "@/components/forms/DemoRequestDialog";
+import { AuditRequestDialog } from "@/components/forms/AuditRequestDialog";
 
 const HeroSection = () => {
   const [currentTagline, setCurrentTagline] = useState(0);
+  const [isDemoDialogOpen, setIsDemoDialogOpen] = useState(false);
+  const [isAuditDialogOpen, setIsAuditDialogOpen] = useState(false);
   
   const taglines = [
     "Where Businesses Meet Their AI Future",
@@ -53,16 +57,12 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <Button size="lg" asChild className="btn-hero-primary">
-              <a href="https://calendly.com/atharv-kumar-webisdom/ai-chieftain-demo" target="_blank" rel="noopener noreferrer">
-                Book a Demo
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+            <Button size="lg" className="btn-hero-primary" onClick={() => setIsDemoDialogOpen(true)}>
+              Book a Demo
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" asChild className="btn-hero-secondary">
-              <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
-                Request an AI Audit
-              </a>
+            <Button size="lg" variant="outline" className="btn-hero-secondary" onClick={() => setIsAuditDialogOpen(true)}>
+              Request an AI Audit
             </Button>
           </div>
 
@@ -87,6 +87,9 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-muted-foreground/50 rounded-full mt-2 animate-pulse" />
         </div>
       </div>
+
+      <DemoRequestDialog open={isDemoDialogOpen} onOpenChange={setIsDemoDialogOpen} />
+      <AuditRequestDialog open={isAuditDialogOpen} onOpenChange={setIsAuditDialogOpen} />
     </section>
   );
 };

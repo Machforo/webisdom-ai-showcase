@@ -26,7 +26,7 @@ const Footer = () => {
               <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="mailto:contact@webisdomtech.com" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="mailto:contact@webisdom.ai" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Mail size={20} />
               </a>
             </div>
@@ -93,12 +93,23 @@ const Footer = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-start space-x-2">
                 <Mail size={16} className="mt-0.5 text-primary-foreground/80" />
-                <a 
-                  href="mailto:contact@webisdomtech.com" 
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
-                >
-                  contact@webisdomtech.com
-                </a>
+                <div className="flex flex-col gap-1">
+                  <a 
+                    href="mailto:contact@webisdom.ai" 
+                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                  >
+                    contact@webisdom.ai
+                  </a>
+                  <a 
+                    href="mailto:atharv.kumar@webisdom.ai" 
+                    className="text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                  >
+                    atharv.kumar@webisdom.ai
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-start space-x-2">
+                <span className="text-primary-foreground/80 text-sm">Phone: +91 9569394675</span>
               </div>
               <div className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-0.5 text-primary-foreground/80" />

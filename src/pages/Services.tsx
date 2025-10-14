@@ -1,11 +1,15 @@
+import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLink, Clock, Search, BarChart3, MapPin, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { AuditRequestDialog } from "@/components/forms/AuditRequestDialog";
 
 const Services = () => {
+  const [isAuditDialogOpen, setIsAuditDialogOpen] = useState(false);
+
   const auditProcess = [
     {
       icon: Search,
@@ -98,10 +102,8 @@ const Services = () => {
                   </div>
 
                   <div className="text-center pt-6">
-                    <Button size="lg" asChild>
-                      <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
-                        Request AI Audit
-                      </a>
+                    <Button size="lg" onClick={() => setIsAuditDialogOpen(true)}>
+                      Request AI Audit
                     </Button>
                   </div>
                 </CardContent>
@@ -146,16 +148,16 @@ const Services = () => {
             </div>
 
             <div className="text-center mt-12">
-              <Button size="lg" asChild>
-                <a href="https://calendly.com/atharv-kumar-webisdom/ai-audit-webisdom" target="_blank" rel="noopener noreferrer">
-                  Start Your AI Audit
-                </a>
+              <Button size="lg" onClick={() => setIsAuditDialogOpen(true)}>
+                Start Your AI Audit
               </Button>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+
+      <AuditRequestDialog open={isAuditDialogOpen} onOpenChange={setIsAuditDialogOpen} />
     </div>
   );
 };

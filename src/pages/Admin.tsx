@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { LogOut, Mail, Building2, MessageSquare, Calendar, RefreshCw } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LogOut, Mail, Building2, MessageSquare, Calendar, RefreshCw, Phone, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ContactSubmission {
@@ -19,49 +20,39 @@ interface ContactSubmission {
   Time: string | null;
 }
 
+interface DemoRequest {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  message: string | null;
+  created_at: string;
+}
+
+interface AuditRequest {
+  id: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  industry: string | null;
+  message: string | null;
+  created_at: string;
+}
+
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
+  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
+  const [demoRequests, setDemoRequests] = useState<DemoRequest[]>([]);
+  const [auditRequests, setAuditRequests] = useState<AuditRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const ADMIN_EMAIL = "webisdomtech@gmail.com";
-  const ADMIN_PASSWORD = "webisdomtech@123";
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchSubmissions();
-      
-      // Set up realtime subscription
-      const channel = supabase
-        .channel('contact-submissions')
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'Contact Form Submission'
-          },
-          () => {
-            fetchSubmissions();
-            toast({
-              title: "New Submission",
-              description: "A new contact form submission has been received.",
-            });
-          }
-        )
-        .subscribe();
-
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }
-  }, [isAuthenticated]);
-
-  const fetchSubmissions = async () => {
+  const fetchContactSubmissions = async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -71,12 +62,12 @@ const Admin = () => {
         .order('Time', { ascending: false });
 
       if (error) throw error;
-      setSubmissions(data || []);
+      setContactSubmissions(data || []);
     } catch (error) {
-      console.error('Error fetching submissions:', error);
+      console.error('Error fetching contact submissions:', error);
       toast({
         title: "Error",
-        description: "Failed to load submissions. Please try again.",
+        description: "Failed to fetch contact submissions",
         variant: "destructive",
       });
     } finally {
@@ -84,19 +75,76 @@ const Admin = () => {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const fetchDemoRequests = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('demo_requests')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setDemoRequests(data || []);
+    } catch (error) {
+      console.error('Error fetching demo requests:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch demo requests",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchAuditRequests = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('audit_requests')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setAuditRequests(data || []);
+    } catch (error) {
+      console.error('Error fetching audit requests:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch audit requests",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchAllData = () => {
+    fetchContactSubmissions();
+    fetchDemoRequests();
+    fetchAuditRequests();
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAllData();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    // Simple credential check for admin
+    if (email === "admin@gmail.com" && password === "admin@123") {
       setIsAuthenticated(true);
       toast({
-        title: "Welcome",
-        description: "Successfully logged in to admin panel.",
+        title: "Login Successful",
+        description: "Welcome to the admin dashboard",
       });
     } else {
       toast({
-        title: "Access Denied",
-        description: "Invalid credentials. Please try again.",
+        title: "Login Failed",
+        description: "Invalid credentials",
         variant: "destructive",
       });
     }
@@ -114,23 +162,27 @@ const Admin = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Admin Access</CardTitle>
+            <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
-              <div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium">Email</label>
                 <Input
+                  id="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder="admin@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
-              <div>
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium">Password</label>
                 <Input
+                  id="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -152,96 +204,196 @@ const Admin = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Contact Form Submissions</p>
+            <p className="text-muted-foreground">Webisdom AI - Form Submissions</p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={fetchSubmissions} disabled={loading}>
-              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            <Button onClick={fetchAllData} variant="outline" size="sm">
+              <RefreshCw className="mr-2 h-4 w-4" />
               Refresh
             </Button>
-            <Button variant="destructive" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
+            <Button onClick={handleLogout} variant="destructive" size="sm">
+              <LogOut className="mr-2 h-4 w-4" />
               Logout
             </Button>
           </div>
         </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>All Submissions</CardTitle>
-              <Badge variant="secondary">{submissions.length} total</Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="text-center py-8">
-                <RefreshCw className="w-8 h-8 animate-spin mx-auto text-primary" />
-                <p className="mt-2 text-muted-foreground">Loading submissions...</p>
-              </div>
-            ) : submissions.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No submissions yet.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date & Time</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Interest</TableHead>
-                      <TableHead>Message</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {submissions.map((submission, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="whitespace-nowrap">
-                          <div className="flex items-center gap-2 text-sm">
-                            <Calendar className="w-4 h-4 text-muted-foreground" />
-                            <div>
-                              <div>{submission.Date || 'N/A'}</div>
-                              <div className="text-xs text-muted-foreground">{submission.Time || 'N/A'}</div>
-                            </div>
-                          </div>
-                        </TableCell>
-                        <TableCell className="font-medium">{submission["full name"]}</TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Mail className="w-4 h-4 text-muted-foreground" />
-                            <a href={`mailto:${submission.email}`} className="hover:underline">
-                              {submission.email}
-                            </a>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Building2 className="w-4 h-4 text-muted-foreground" />
-                            {submission["Company Name"] || "N/A"}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{submission.Interest || "General"}</Badge>
-                        </TableCell>
-                        <TableCell className="max-w-xs">
-                          <div className="flex items-start gap-2">
-                            <MessageSquare className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
-                            <p className="text-sm line-clamp-2">
-                              {submission["Additional Message"] || "No message"}
-                            </p>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <Tabs defaultValue="contact" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="contact">Contact Forms ({contactSubmissions.length})</TabsTrigger>
+            <TabsTrigger value="demo">Demo Requests ({demoRequests.length})</TabsTrigger>
+            <TabsTrigger value="audit">Audit Requests ({auditRequests.length})</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="contact">
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Form Submissions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="text-center py-8">Loading...</div>
+                ) : contactSubmissions.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">No contact submissions yet</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Date & Time</TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Company</TableHead>
+                          <TableHead>Interest</TableHead>
+                          <TableHead>Message</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {contactSubmissions.map((submission, index) => (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{submission.Date || 'N/A'}</span>
+                                <span className="text-sm text-muted-foreground">{submission.Time || 'N/A'}</span>
+                              </div>
+                            </TableCell>
+                            <TableCell className="font-medium">{submission["full name"]}</TableCell>
+                            <TableCell>
+                              <a href={`mailto:${submission.email}`} className="text-primary hover:underline">
+                                {submission.email}
+                              </a>
+                            </TableCell>
+                            <TableCell>{submission["Company Name"] || '-'}</TableCell>
+                            <TableCell>
+                              {submission.Interest && (
+                                <Badge variant="secondary">{submission.Interest}</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell className="max-w-xs truncate">
+                              {submission["Additional Message"] || '-'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="demo">
+            <Card>
+              <CardHeader>
+                <CardTitle>Demo Requests</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="text-center py-8">Loading...</div>
+                ) : demoRequests.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">No demo requests yet</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Company</TableHead>
+                          <TableHead>Phone</TableHead>
+                          <TableHead>Message</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {demoRequests.map((request) => (
+                          <TableRow key={request.id}>
+                            <TableCell>
+                              {new Date(request.created_at).toLocaleDateString()} <br />
+                              <span className="text-sm text-muted-foreground">
+                                {new Date(request.created_at).toLocaleTimeString()}
+                              </span>
+                            </TableCell>
+                            <TableCell className="font-medium">{request.name}</TableCell>
+                            <TableCell>
+                              <a href={`mailto:${request.email}`} className="text-primary hover:underline">
+                                {request.email}
+                              </a>
+                            </TableCell>
+                            <TableCell>{request.company || '-'}</TableCell>
+                            <TableCell>{request.phone || '-'}</TableCell>
+                            <TableCell className="max-w-xs truncate">
+                              {request.message || '-'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="audit">
+            <Card>
+              <CardHeader>
+                <CardTitle>AI Audit Requests</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="text-center py-8">Loading...</div>
+                ) : auditRequests.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">No audit requests yet</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Company</TableHead>
+                          <TableHead>Industry</TableHead>
+                          <TableHead>Phone</TableHead>
+                          <TableHead>Message</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {auditRequests.map((request) => (
+                          <TableRow key={request.id}>
+                            <TableCell>
+                              {new Date(request.created_at).toLocaleDateString()} <br />
+                              <span className="text-sm text-muted-foreground">
+                                {new Date(request.created_at).toLocaleTimeString()}
+                              </span>
+                            </TableCell>
+                            <TableCell className="font-medium">{request.name}</TableCell>
+                            <TableCell>
+                              <a href={`mailto:${request.email}`} className="text-primary hover:underline">
+                                {request.email}
+                              </a>
+                            </TableCell>
+                            <TableCell>{request.company || '-'}</TableCell>
+                            <TableCell>
+                              {request.industry && (
+                                <Badge variant="outline">{request.industry}</Badge>
+                              )}
+                            </TableCell>
+                            <TableCell>{request.phone || '-'}</TableCell>
+                            <TableCell className="max-w-xs truncate">
+                              {request.message || '-'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
