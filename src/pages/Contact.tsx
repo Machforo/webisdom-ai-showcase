@@ -31,18 +31,17 @@ const Contact = () => {
         const dateStr = now.toISOString().split('T')[0];
         const timeStr = now.toTimeString().split(' ')[0];
 
-        // Insert contact form data into Supabase table
+        // Insert contact form data into form_submissions (public)
+        const confirmationId = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
         const { data: insertData, error: insertError } = await supabase
-          .from('Contact Form Submission')
+          .from('form_submissions')
           .insert([
             {
-              "full name": formData.name,
+              submission_type: 'contact',
+              confirmation_id: confirmationId,
+              name: formData.name,
               email: formData.email,
-              "Company Name": formData.company || null,
-              Interest: formData.service,
-              "Additional Message": formData.message,
-              Date: dateStr,
-              Time: timeStr
+              message: `Service: ${formData.service}\nMessage: ${formData.message}\nDate: ${dateStr} ${timeStr}`,
             }
           ])
           .select();
@@ -286,7 +285,7 @@ const Contact = () => {
                         </div>
                         <div>
                           <h4 className="font-semibold mb-1">Location</h4>
-                          <p className="text-muted-foreground">India</p>
+                          <p className="text-muted-foreground">First Floor, 8/78, Dentedge, Janpath, Connaught Place, New Delhi, Delhi, 110001</p>
                         </div>
                       </div>
 

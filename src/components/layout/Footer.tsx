@@ -12,7 +12,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/261cb841-1550-43b8-927d-f30d8e8fb3c7.png" 
                 alt="Webisdom AI Solutions" 
-                className="h-12 w-auto brightness-0 invert"
+                className="h-16 sm:h-20 w-auto brightness-0 invert"
               />
               <span className="text-lg font-bold">Webisdom AI</span>
             </div>
@@ -20,13 +20,13 @@ const Footer = () => {
               Building domain-specific AI solutions that deliver measurable impact across Hospitality, Fintech, and Healthcare.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="https://www.linkedin.com/company/webisdom" target="_blank" rel="noopener noreferrer" aria-label="Webisdom LinkedIn" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="https://x.com/Webisdom" target="_blank" rel="noopener noreferrer" aria-label="Webisdom Twitter" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="mailto:contact@webisdom.ai" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
+              <a href="mailto:contact@webisdom.ai" aria-label="Email Webisdom" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors">
                 <Mail size={20} />
               </a>
             </div>
@@ -114,7 +114,7 @@ const Footer = () => {
               <div className="flex items-start space-x-2">
                 <MapPin size={16} className="mt-0.5 text-primary-foreground/80" />
                 <span className="text-primary-foreground/80">
-                  India
+                  First Floor, 8/78, Dentedge, Janpath, Connaught Place, New Delhi, Delhi, 110001
                 </span>
               </div>
             </div>
