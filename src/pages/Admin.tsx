@@ -11,13 +11,12 @@ import { LogOut, Mail, Building2, MessageSquare, Calendar, RefreshCw, Phone, Bri
 import { useToast } from "@/hooks/use-toast";
 
 interface ContactSubmission {
-  "full name": string;
+  id: string;
+  name: string;
   email: string;
-  "Company Name": string | null;
-  Interest: string | null;
-  "Additional Message": string | null;
-  Date: string | null;
-  Time: string | null;
+  message: string | null;
+  confirmation_id: string;
+  created_at: string;
 }
 
 interface DemoRequest {
@@ -56,10 +55,10 @@ const Admin = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('Contact Form Submission')
+        .from('form_submissions')
         .select('*')
-        .order('Date', { ascending: false })
-        .order('Time', { ascending: false });
+        .eq('submission_type', 'contact')
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setContactSubmissions(data || []);
@@ -243,34 +242,36 @@ const Admin = () => {
                           <TableHead>Date & Time</TableHead>
                           <TableHead>Name</TableHead>
                           <TableHead>Email</TableHead>
-                          <TableHead>Company</TableHead>
-                          <TableHead>Interest</TableHead>
                           <TableHead>Message</TableHead>
+                          <TableHead>Confirmation ID</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {contactSubmissions.map((submission, index) => (
-                          <TableRow key={index}>
+                        {contactSubmissions.map((submission) => (
+                          <TableRow key={submission.id}>
                             <TableCell>
                               <div className="flex flex-col">
-                                <span className="font-medium">{submission.Date || 'N/A'}</span>
-                                <span className="text-sm text-muted-foreground">{submission.Time || 'N/A'}</span>
+                                <span className="font-medium">
+                                  {new Date(submission.created_at).toLocaleDateString()}
+                                </span>
+                                <span className="text-sm text-muted-foreground">
+                                  {new Date(submission.created_at).toLocaleTimeString()}
+                                </span>
                               </div>
                             </TableCell>
-                            <TableCell className="font-medium">{submission["full name"]}</TableCell>
+                            <TableCell className="font-medium">{submission.name}</TableCell>
                             <TableCell>
                               <a href={`mailto:${submission.email}`} className="text-primary hover:underline">
                                 {submission.email}
                               </a>
                             </TableCell>
-                            <TableCell>{submission["Company Name"] || '-'}</TableCell>
-                            <TableCell>
-                              {submission.Interest && (
-                                <Badge variant="secondary">{submission.Interest}</Badge>
-                              )}
+                            <TableCell className="max-w-xs">
+                              <div className="line-clamp-2">{submission.message || '-'}</div>
                             </TableCell>
-                            <TableCell className="max-w-xs truncate">
-                              {submission["Additional Message"] || '-'}
+                            <TableCell>
+                              <Badge variant="outline" className="font-mono text-xs">
+                                {submission.confirmation_id}
+                              </Badge>
                             </TableCell>
                           </TableRow>
                         ))}

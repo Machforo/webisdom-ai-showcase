@@ -64,54 +64,66 @@ export const AuditRequestDialog = ({ open, onOpenChange }: AuditRequestDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Request an AI Audit</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="pb-4 border-b border-border">
+          <DialogTitle className="text-2xl font-bold text-gradient">Request an AI Audit</DialogTitle>
+          <DialogDescription className="text-base text-muted-foreground">
             Get a comprehensive AI audit for your business. We'll analyze your operations and provide actionable recommendations.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="audit-name">Name *</Label>
-            <Input
-              id="audit-name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-            />
+        <form onSubmit={handleSubmit} className="space-y-5 pt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="audit-name" className="text-sm font-semibold">Name *</Label>
+              <Input
+                id="audit-name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                placeholder="John Doe"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="audit-email" className="text-sm font-semibold">Email *</Label>
+              <Input
+                id="audit-email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                placeholder="john@company.com"
+                className="h-11"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="audit-company" className="text-sm font-semibold">Company</Label>
+              <Input
+                id="audit-company"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                placeholder="Your Company"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="audit-phone" className="text-sm font-semibold">Phone</Label>
+              <Input
+                id="audit-phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+1 (555) 000-0000"
+                className="h-11"
+              />
+            </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="audit-email">Email *</Label>
-            <Input
-              id="audit-email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="audit-company">Company</Label>
-            <Input
-              id="audit-company"
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="audit-phone">Phone</Label>
-            <Input
-              id="audit-phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="audit-industry">Industry</Label>
+            <Label htmlFor="audit-industry" className="text-sm font-semibold">Industry</Label>
             <Select value={formData.industry} onValueChange={(value) => setFormData({ ...formData, industry: value })}>
-              <SelectTrigger id="audit-industry">
+              <SelectTrigger id="audit-industry" className="h-11">
                 <SelectValue placeholder="Select your industry" />
               </SelectTrigger>
               <SelectContent>
@@ -125,17 +137,21 @@ export const AuditRequestDialog = ({ open, onOpenChange }: AuditRequestDialogPro
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="audit-message">Message</Label>
+            <Label htmlFor="audit-message" className="text-sm font-semibold">Message</Label>
             <Textarea
               id="audit-message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              rows={3}
+              rows={4}
+              placeholder="Tell us about your business and what areas you'd like us to audit..."
+              className="resize-none"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit Request"}
-          </Button>
+          <div className="pt-2">
+            <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit Audit Request"}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

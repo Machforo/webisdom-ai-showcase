@@ -61,62 +61,78 @@ export const DemoRequestDialog = ({ open, onOpenChange }: DemoRequestDialogProps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Request a Demo</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="pb-4 border-b border-border">
+          <DialogTitle className="text-2xl font-bold text-gradient">Request a Demo</DialogTitle>
+          <DialogDescription className="text-base text-muted-foreground">
             Fill out the form below and we'll schedule a personalized demo for you.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="demo-name">Name *</Label>
-            <Input
-              id="demo-name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-            />
+        <form onSubmit={handleSubmit} className="space-y-5 pt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="demo-name" className="text-sm font-semibold">Name *</Label>
+              <Input
+                id="demo-name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                placeholder="John Doe"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="demo-email" className="text-sm font-semibold">Email *</Label>
+              <Input
+                id="demo-email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                placeholder="john@company.com"
+                className="h-11"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="demo-company" className="text-sm font-semibold">Company</Label>
+              <Input
+                id="demo-company"
+                value={formData.company}
+                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                placeholder="Your Company"
+                className="h-11"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="demo-phone" className="text-sm font-semibold">Phone</Label>
+              <Input
+                id="demo-phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+1 (555) 000-0000"
+                className="h-11"
+              />
+            </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="demo-email">Email *</Label>
-            <Input
-              id="demo-email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="demo-company">Company</Label>
-            <Input
-              id="demo-company"
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="demo-phone">Phone</Label>
-            <Input
-              id="demo-phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="demo-message">Message</Label>
+            <Label htmlFor="demo-message" className="text-sm font-semibold">Message</Label>
             <Textarea
               id="demo-message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              rows={3}
+              rows={4}
+              placeholder="Tell us about your needs and what you'd like to see in the demo..."
+              className="resize-none"
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit Request"}
-          </Button>
+          <div className="pt-2">
+            <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={isSubmitting}>
+              {isSubmitting ? "Submitting..." : "Submit Demo Request"}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
