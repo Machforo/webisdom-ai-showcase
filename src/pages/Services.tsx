@@ -3,41 +3,65 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Clock, Search, BarChart3, MapPin, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Search, BarChart3, MapPin, CheckCircle, Brain, Eye, TrendingUp, Shield, Cpu, Zap, Target, Sparkles } from "lucide-react";
 import { AuditRequestDialog } from "@/components/forms/AuditRequestDialog";
+import { DemoRequestDialog } from "@/components/forms/DemoRequestDialog";
 
 const Services = () => {
   const [isAuditDialogOpen, setIsAuditDialogOpen] = useState(false);
+  const [isDemoDialogOpen, setIsDemoDialogOpen] = useState(false);
 
   const auditProcess = [
     {
       icon: Search,
-      title: "Business Discovery",
-      description: "Deep dive into your current operations, workflows, and data infrastructure to understand your unique challenges and opportunities.",
+      title: "Performance Benchmarking",
+      description: "Comprehensive evaluation of your AI systems against industry standards, identifying optimization opportunities and performance gaps.",
       duration: "1-2 weeks"
     },
     {
-      icon: BarChart3,
-      title: "AI Opportunity Assessment", 
-      description: "Comprehensive analysis of where AI can create the most impact, including feasibility studies and ROI projections.",
+      icon: Shield,
+      title: "Bias Detection & Ethical Compliance", 
+      description: "Advanced analysis to detect algorithmic bias, ensure fairness, and maintain ethical AI standards across all systems.",
       duration: "2-3 weeks"
     },
     {
       icon: MapPin,
-      title: "Strategic Roadmap Delivery",
-      description: "Detailed implementation plan with timelines, resource requirements, and step-by-step guidance for AI adoption.",
+      title: "Improvement Roadmap",
+      description: "Strategic plan with actionable insights, technical recommendations, and clear implementation pathways for AI optimization.",
       duration: "1 week"
     }
   ];
 
   const auditBenefits = [
-    "Identify hidden AI opportunities in your business",
-    "Get expert analysis of implementation feasibility",
-    "Receive detailed ROI projections and cost-benefit analysis",
-    "Access strategic roadmap with clear implementation steps",
-    "Understand technical requirements and resource needs",
-    "Minimize risks with proven AI adoption strategies"
+    "Performance benchmarking against industry leaders",
+    "Advanced bias detection and fairness analysis",
+    "Ethical AI compliance validation and certification",
+    "Detailed improvement roadmaps with clear milestones",
+    "ROI projections and cost-benefit optimization",
+    "Risk mitigation strategies for AI deployment"
+  ];
+
+  const aiLabServices = [
+    {
+      icon: Brain,
+      title: "Custom AI Models",
+      description: "Tailored machine learning models designed specifically for your business needs, from concept to deployment."
+    },
+    {
+      icon: Cpu,
+      title: "NLP Systems",
+      description: "Advanced natural language processing solutions for intelligent automation, sentiment analysis, and conversational AI."
+    },
+    {
+      icon: Eye,
+      title: "Computer Vision Tools",
+      description: "Cutting-edge image and video analysis systems for automated quality control, object detection, and visual intelligence."
+    },
+    {
+      icon: TrendingUp,
+      title: "Predictive Analytics",
+      description: "Data-driven forecasting models that transform historical data into actionable future insights and strategic advantages."
+    }
   ];
 
   return (
@@ -49,10 +73,10 @@ const Services = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-                Our <span className="text-gradient">AI Services</span>
+                Enterprise <span className="text-gradient">AI Solutions</span>
               </h1>
               <p className="text-xl text-muted-foreground">
-                Comprehensive AI solutions tailored for Hospitality, Fintech, and Healthcare industries, plus expert AI auditing services.
+                From intelligent auditing to custom AI development—empowering businesses with cutting-edge artificial intelligence.
               </p>
             </div>
           </div>
@@ -64,9 +88,12 @@ const Services = () => {
             <div className="max-w-4xl mx-auto">
               <Card className="card-gradient hover:shadow-strong transition-all duration-500">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-3xl">AI Audit as a Service</CardTitle>
-                  <p className="text-muted-foreground mt-4">
-                    Comprehensive AI readiness assessment that identifies opportunities, analyzes potential, and delivers actionable insights for successful AI adoption.
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Shield className="h-8 w-8 text-primary" />
+                    <CardTitle className="text-3xl">AI Audit as a Service</CardTitle>
+                  </div>
+                  <p className="text-muted-foreground mt-4 text-lg">
+                    Evaluate and optimize your AI systems through advanced performance benchmarking, bias detection, ethical compliance validation, and strategic improvement roadmaps.
                   </p>
                 </CardHeader>
                 <CardContent className="space-y-8">
@@ -117,10 +144,10 @@ const Services = () => {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                Our AI Audit <span className="text-gradient">Process</span>
+                Enterprise-Grade <span className="text-gradient">AI Auditing</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                A comprehensive 4-6 week engagement designed to unlock your organization's AI potential.
+                A systematic 4-6 week evaluation process delivering actionable insights for AI excellence.
               </p>
             </div>
 
@@ -154,10 +181,69 @@ const Services = () => {
             </div>
           </div>
         </section>
+
+        {/* AI Lab Solutions */}
+        <section className="py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <Sparkles className="h-10 w-10 text-primary" />
+                <h2 className="text-3xl sm:text-4xl font-bold">
+                  AI Lab <span className="text-gradient">Solutions</span>
+                </h2>
+                <Sparkles className="h-10 w-10 text-primary" />
+              </div>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
+                Where innovation meets intelligence. Our AI Lab designs and develops custom AI models, NLP systems, computer vision tools, and predictive analytics solutions that scale with your ambitions.
+              </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                We collaborate closely with your team to transform complex challenges into intelligent, scalable solutions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+              {aiLabServices.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <Card key={service.title} className="card-gradient hover:shadow-strong transition-all duration-500 group">
+                    <CardContent className="p-8 text-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-4">{service.title}</h3>
+                      <p className="text-muted-foreground">{service.description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <Card className="card-gradient hover:shadow-strong transition-all duration-500 border-primary/20">
+              <CardContent className="p-12 text-center">
+                <Target className="h-16 w-16 text-primary mx-auto mb-6" />
+                <h3 className="text-3xl font-bold mb-4">
+                  Transform Your Business with <span className="text-gradient">Intelligent AI Solutions</span>
+                </h3>
+                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Ready to unlock the full potential of artificial intelligence? Let's build the future together.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" onClick={() => setIsDemoDialogOpen(true)}>
+                    Schedule a Demo
+                  </Button>
+                  <Button size="lg" variant="outline" onClick={() => setIsAuditDialogOpen(true)}>
+                    Request AI Audit
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
       </main>
       <Footer />
 
       <AuditRequestDialog open={isAuditDialogOpen} onOpenChange={setIsAuditDialogOpen} />
+      <DemoRequestDialog open={isDemoDialogOpen} onOpenChange={setIsDemoDialogOpen} />
     </div>
   );
 };
